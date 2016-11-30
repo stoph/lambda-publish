@@ -15,7 +15,7 @@ if [[ -n "$skill" ]]; then
 		zip -rq ../index.zip *
 		cd ..
 		echo "   Pushing to Lamba..."
-		aws lambda update-function-code --function-name latin-lunch --zip-file fileb://index.zip
+		aws lambda update-function-code --function-name $skill --zip-file fileb://index.zip
 
 		echo -e "\033[1;31m Done \033[0m"
 	else
