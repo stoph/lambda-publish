@@ -13,11 +13,14 @@ if [[ -n "$skill" ]]; then
 		cd $skill
 		echo "   Zipping files..."
 		zip -rq ../index.zip *
-		cd ..
+		cd .. 
 		echo "   Pushing to Lamba..."
-		aws lambda update-function-code --function-name $skill --zip-file fileb://index.zip
+		aws lambda update-function-code --function-name $skill --zip-file fileb://index.zip >/dev/null
+		echo "   Deleting all log streams from Cloudwatch..."
+		aws logs delete-log-group --log-group-name /aws/lambda/$skill
+		aws logs create-log-group --log-group-name /aws/lambda/$skill
 
-		echo -e "\033[1;31m Done \033[0m"
+		echo -e "\033[1;31m Done \033[0m ✓"
 	else
 		echo "$skill does not exist."
 	fi
